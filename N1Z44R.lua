@@ -1,7 +1,3 @@
---[[
-    N1Z44R v2.1 - STEAL A BRAINROT (Fixed)
-]]
-
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
