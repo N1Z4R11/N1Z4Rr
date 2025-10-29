@@ -43,14 +43,8 @@ player.Idled:Connect(function()
 end)
 
 local BrainrotItems = {
-    "Brainrot", "Brain", "Cash", "Money", "Coin", "Diamond", 
-    "Gold", "Ruby", "Sapphire", "Emerald", "Crystal"
-}
-
-local BrainrotGuards = {
-    "Guard", "Police", "Security", "Cop", "Officer"
-}
-
+    "Cash", "Money", "Diamond", 
+    "Gold"
 local FarmModule = {}
 
 function FarmModule:IsBrainrotItem(obj)
@@ -174,7 +168,7 @@ function FarmModule:AutoSell()
     for _, obj in pairs(Workspace:GetDescendants()) do
         if obj.Name then
             local name = obj.Name:lower()
-            if name:find("sell") or name:find("bank") or name:find("deposit") or name:find("cashier") then
+            if name:find("sell") then
                 table.insert(sellZones, obj)
             end
         end
@@ -205,7 +199,7 @@ function FarmModule:AutoSell()
             wait(0.5)
             
             -- Try common sell remotes
-            local sellRemotes = {"SellItems", "DepositCash", "Sell", "SellAll", "Deposit"}
+            local sellRemotes = {"Sell"}
             for _, remoteName in pairs(sellRemotes) do
                 local remote = ReplicatedStorage:FindFirstChild(remoteName, true)
                 if remote and (remote:IsA("RemoteEvent") or remote:IsA("RemoteFunction")) then
@@ -256,15 +250,6 @@ function ESPModule:UpdateESP()
             if item.object and item.object.Parent then
                 local color = item.isRare and Color3.fromRGB(255, 215, 0) or Color3.fromRGB(0, 255, 0)
                 ESPModule:CreateHighlight(item.object, color, "Item")
-            end
-        end
-    end
-    
-    -- Guard ESP
-    if _G.guardESP then
-        for _, obj in pairs(Workspace:GetDescendants()) do
-            if obj:IsA("Model") and FarmModule:IsGuard(obj) then
-                ESPModule:CreateHighlight(obj, Color3.fromRGB(255, 0, 0), "Guard")
             end
         end
     end
@@ -367,19 +352,11 @@ end
 local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Orion/main/source'))()
 
 local Window = OrionLib:MakeWindow({
-    Name = "N1Z44R v2.1 | Brainrot (Fixed)",
+    Name = "N1Z44R v2.1",
     HidePremium = false,
     SaveConfig = true,
     ConfigFolder = "N1Z44RConfig"
 })
-
--- Farm Tab
-local FarmTab = Window:MakeTab({
-    Name = "Auto Farm",
-    Icon = "rbxassetid://4483345998",
-    PremiumOnly = false
-})
-
 FarmTab:AddToggle({
     Name = "Auto Steal Items",
     Default = false,
@@ -455,11 +432,11 @@ local MoveTab = Window:MakeTab({
 
 MoveTab:AddSlider({
     Name = "Walk Speed",
-    Min = 16,
-    Max = 150,
-    Default = 16,
+    Min = 32,
+    Max = 120,
+    Default = 32,
     Color = Color3.fromRGB(255, 255, 255),
-    Increment = 1,
+    Increment = 5,
     ValueName = "speed",
     Callback = function(value)
         _G.walkSpeed = value
@@ -470,7 +447,7 @@ MoveTab:AddSlider({
 })
 
 MoveTab:AddToggle({
-    Name = "Fly",
+    Name = "Fly (patched)",
     Default = false,
     Callback = function(value)
         _G.flyEnabled = value
@@ -480,9 +457,9 @@ MoveTab:AddToggle({
 
 MoveTab:AddSlider({
     Name = "Fly Speed",
-    Min = 50,
-    Max = 300,
-    Default = 100,
+    Min = 30,
+    Max = 150,
+    Default = 60,
     Color = Color3.fromRGB(0, 200, 255),
     Increment = 10,
     ValueName = "speed",
@@ -492,7 +469,7 @@ MoveTab:AddSlider({
 })
 
 MoveTab:AddToggle({
-    Name = "NoClip",
+    Name = "NoClip (patched)",
     Default = false,
     Callback = function(value)
         _G.noClipEnabled = value
@@ -538,7 +515,7 @@ ESPTab:AddToggle({
 })
 
 ESPTab:AddToggle({
-    Name = "Guard ESP",
+    Name = ".",
     Default = false,
     Callback = function(value)
         _G.guardESP = value
@@ -605,8 +582,8 @@ end)
 
 -- Notification
 OrionLib:MakeNotification({
-    Name = "N1Z44R v2.1 Fixed",
-    Content = "Script cargado correctamente!",
+    Name = "N1Z44R v2.1",
+    Content = "Script cargado correctamente",
     Image = "rbxassetid://4483345998",
     Time = 5
 })
